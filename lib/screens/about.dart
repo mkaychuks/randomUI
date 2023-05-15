@@ -7,20 +7,7 @@ class AboutPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final value = ref.watch(currentStateProvider);
-
-    ref.listen<int>(
-      currentStateProvider,
-      (prev, curr) {
-        if (curr == 65) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text("Value is 65"),
-            ),
-          );
-        }
-      },
-    );
+    
 
     return SafeArea(
       child: Scaffold(
@@ -31,16 +18,15 @@ class AboutPage extends ConsumerWidget {
             child: Column(
               children: [
                 Text(
-                  "Current value is ${value.toString()}",
+                  "",
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 ElevatedButton(
-                  child: Text("Increment"),
+                  child: const Text("Increment"),
                   onPressed: () {
-                    ref.read(currentStateProvider.notifier).state += 1;
                   },
                 ),
               ],
