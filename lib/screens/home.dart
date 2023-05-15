@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:learn_riverpod/provider/state_provider.dart';
+import 'package:learn_riverpod/screens/about.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -50,9 +52,14 @@ class HomePage extends ConsumerWidget {
                   if (username.isNotEmpty && password.isNotEmpty) {
                     ref.read(isLoadingStateProvider.notifier).state = true;
                     Future.delayed(
-                      Duration(seconds: 5),
+                      const Duration(seconds: 5),
                       () {
                         ref.read(isLoadingStateProvider.notifier).state = false;
+                        Navigator.of(context).push(
+                          CupertinoPageRoute(
+                            builder: (context) => const AboutPage(),
+                          ),
+                        );
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text("Login successful"),
@@ -98,7 +105,7 @@ Widget customButton(
       ),
       child: Text(
         isLoading ? "Please wait...." : "Login",
-        style: TextStyle(color: Colors.white, fontSize: 18),
+        style: const TextStyle(color: Colors.white, fontSize: 18),
       ),
     ),
   );
