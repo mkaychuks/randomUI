@@ -1,27 +1,19 @@
-import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:learn_riverpod/models/activity.dart';
+import 'package:http/http.dart' as http;
 
-final userApiServiceProvider = Provider<UserApiService>((ref) => UserApiService());
 
-class UserApiService {
-  Future<Activity> getActivity() async {
+final usersApiService = Provider<UsersApiService>((ref) => UsersApiService());
+
+class UsersApiService {
+  
+  Future<List<Users?>> getAllUser() async {
     try {
-      final res = await Dio().get('https://www.boredapi.com/api/activity/');
-      return Activity.fromJson(res.data);
+      final uri = Uri.parse("https://jsonplaceholder.typicode.com/users");
+      final res = await http.get(uri);
+      return usersFromJson(res.body);
     } catch (e) {
-      throw Exception("Error getting suggestions");
-    }
-  }
-
-
-
-  Future<Post> getPost() async {
-    try {
-      final res = await Dio().get('https://jsonplaceholder.typicode.com/posts/1');
-      return Post.fromJson(res.data);
-    } catch (e) {
-      throw Exception("Error getting suggestions");
+      throw Exception("Something went wrong");
     }
   }
 }

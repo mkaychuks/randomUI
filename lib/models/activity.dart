@@ -1,84 +1,46 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 // To parse this JSON data, do
 //
-//     final activity = activityFromJson(jsonString);
+//     final users = usersFromJson(jsonString);
 
 import 'dart:convert';
 
-Activity activityFromJson(String str) => Activity.fromJson(json.decode(str));
+List<Users> usersFromJson(String str) => List<Users>.from(json.decode(str).map((x) => Users.fromJson(x)));
 
-String activityToJson(Activity data) => json.encode(data.toJson());
+String usersToJson(List<Users> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class Activity {
-  String activity;
-  double accessibility;
-  String type;
-  int participants;
-  double price;
-  String link;
-  String key;
-
-  Activity({
-    required this.activity,
-    required this.accessibility,
-    required this.type,
-    required this.participants,
-    required this.price,
-    required this.link,
-    required this.key,
-  });
-
-  factory Activity.fromJson(Map<String, dynamic> json) => Activity(
-        activity: json["activity"],
-        accessibility: json["accessibility"]?.toDouble(),
-        type: json["type"],
-        participants: json["participants"],
-        price: json["price"]?.toDouble(),
-        link: json["link"],
-        key: json["key"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "activity": activity,
-        "accessibility": accessibility,
-        "type": type,
-        "participants": participants,
-        "price": price,
-        "link": link,
-        "key": key,
-      };
-}
-
-
-
-Post postFromJson(String str) => Post.fromJson(json.decode(str));
-
-String postToJson(Post data) => json.encode(data.toJson());
-
-class Post {
-    int userId;
+class Users {
     int id;
-    String title;
-    String body;
+    String name;
+    String username;
+    String email;
+    String phone;
+    String website;
 
-    Post({
-        required this.userId,
+    Users({
         required this.id,
-        required this.title,
-        required this.body,
+        required this.name,
+        required this.username,
+        required this.email,
+        required this.phone,
+        required this.website,
     });
 
-    factory Post.fromJson(Map<String, dynamic> json) => Post(
-        userId: json["userId"],
+    factory Users.fromJson(Map<String, dynamic> json) => Users(
         id: json["id"],
-        title: json["title"],
-        body: json["body"],
+        name: json["name"],
+        username: json["username"],
+        email: json["email"],
+        phone: json["phone"],
+        website: json["website"],
     );
 
     Map<String, dynamic> toJson() => {
-        "userId": userId,
         "id": id,
-        "title": title,
-        "body": body,
+        "name": name,
+        "username": username,
+        "email": email,
+        "phone": phone,
+        "website": website,
     };
 }
+
