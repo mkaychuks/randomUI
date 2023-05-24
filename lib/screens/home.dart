@@ -1,134 +1,136 @@
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:learn_riverpod/provider/state_provider.dart';
-import 'package:learn_riverpod/screens/about.dart';
 
-class HomePage extends ConsumerWidget {
-  const HomePage({super.key});
+import 'package:learn_riverpod/providers/provider.dart';
+import 'package:learn_riverpod/providers/state_providers.dart';
+import 'package:learn_riverpod/widgets/action_widgets.dart';
+import 'package:learn_riverpod/widgets/header_section.dart';
+import 'package:learn_riverpod/widgets/tab_transactions.dart';
+import 'package:learn_riverpod/widgets/total_section.dart';
+
+import '../widgets/recent_text.dart';
+
+class HomeScreen extends ConsumerStatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    TextEditingController usernameController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
 
-    final isLoading = ref.watch(isLoadingStateProvider);
+class _HomeScreenState extends ConsumerState<HomeScreen>
+    with SingleTickerProviderStateMixin {
+  late TabController tabController;
 
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.purple,
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(12.0),
+  @override
+  void initState() {
+    super.initState();
+    tabController = TabController(length: 4, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    tabController.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final price = ref.watch(priceStateProvider);
+    final tabs = ref.watch(tabProvider);
+    final transactions = ref.watch(transactionsProvider);
+    return Scaffold(
+      backgroundColor: const Color(0XFF0D0D0C),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(24.0),
+        physics: const BouncingScrollPhysics(),
+        child: SizedBox(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              customInputField(
-                context: context,
-                hintText: "E.g. John Doe",
-                prefixIcon: Icons.person,
-                controller: usernameController,
-              ),
-              const SizedBox(
-                height: 12,
-              ),
-              customInputField(
-                context: context,
-                hintText: "E.g. xxxxxxxxx",
-                prefixIcon: Icons.lock,
-                controller: passwordController,
-              ),
-              const SizedBox(
-                height: 12,
-              ),
-              customButton(
-                context: context,
-                isLoading: isLoading,
-                onTap: () {
-                  final username = usernameController.text.trim();
-                  final password = passwordController.text.trim();
+              const SizedBox(height: 60),
 
-                  if (username.isNotEmpty && password.isNotEmpty) {
-                    ref.read(isLoadingStateProvider.notifier).state = true;
-                    Future.delayed(
-                      const Duration(seconds: 5),
-                      () {
-                        ref.read(isLoadingStateProvider.notifier).state = false;
-                        Navigator.of(context).push(
-                          CupertinoPageRoute(
-                            builder: (context) => const AboutPage(),
-                          ),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text("Login successful"),
-                            behavior: SnackBarBehavior.floating,
-                            backgroundColor: Colors.purpleAccent,
-                          ),
-                        );
-                      },
-                    );
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        duration: Duration(seconds: 2),
-                        content: Text("An Error occured"),
-                        behavior: SnackBarBehavior.floating,
-                        backgroundColor: Colors.red,
-                      ),
-                    );
-                  }
-                },
+              // header section
+              const HeaderSection(),
+              const SizedBox(height: 27),
+
+              // total price section
+              TotalSection(price: price),
+
+              // divider
+              const SizedBox(height: 12),
+              const Divider(height: 1.5, color: Colors.white),
+              const SizedBox(height: 24),
+
+              // chips
+              SizedBox(
+                height: 88,
+                child: ListView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  children: const [
+                    ActionWidgets(
+                        text: "Fund Transfer", imageUrl: "images/trans.png"),
+                    ActionWidgets(
+                        text: "Add Money", imageUrl: "images/dollar.png"),
+                    ActionWidgets(text: "More", imageUrl: "images/more.png"),
+                  ],
+                ),
               ),
+
+              // recent activity
+              const SizedBox(height: 24),
+              recentActivity(),
+              const SizedBox(height: 24),
+
+              // the tab bar
+              SizedBox(
+                height: 30,
+                child: TabBar(
+                  indicator: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: const Color(0XFFB6EF11),
+                  ),
+                  isScrollable: true,
+                  controller: tabController,
+                  indicatorColor: Colors.transparent,
+                  unselectedLabelColor: Colors.white,
+                  labelPadding: const EdgeInsets.symmetric(horizontal: 12),
+                  tabs: tabs,
+                ),
+              ),
+
+              const SizedBox(
+                height: 10,
+              ),
+
+              // the tabs
+              SizedBox(
+                height: 400,
+                // color: Colors.blue,
+                child: TabBarView(
+                  controller: tabController,
+                  children: [
+                    // tab one child
+                    TransactionsTabWidget(transactions: transactions),
+                    // tab two child
+                    TransactionsTabWidget(transactions: transactions),
+                    // and so on
+                    TransactionsTabWidget(transactions: transactions),
+                    // tab 4
+                    TransactionsTabWidget(transactions: transactions),
+                  ],
+                ),
+              ),
+
+              //  other parts of the UI
+              // hdhdhddhdhdh
             ],
           ),
         ),
       ),
     );
   }
-}
-
-Widget customButton(
-    {required BuildContext context,
-    required void Function()? onTap,
-    required bool isLoading}) {
-  return GestureDetector(
-    onTap: onTap,
-    child: Container(
-      width: double.infinity,
-      height: 56,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: isLoading ? Colors.grey : Colors.purpleAccent,
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: Text(
-        isLoading ? "Please wait...." : "Login",
-        style: const TextStyle(color: Colors.white, fontSize: 18),
-      ),
-    ),
-  );
-}
-
-Widget customInputField(
-    {BuildContext? context,
-    required String hintText,
-    required IconData prefixIcon,
-    required TextEditingController controller}) {
-  return Container(
-    height: 64,
-    decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12), color: Colors.grey[300]),
-    child: TextFormField(
-      controller: controller,
-      maxLines: 1,
-      decoration: InputDecoration(
-        prefixIcon: Icon(prefixIcon),
-        hintText: hintText,
-        enabledBorder: const OutlineInputBorder(borderSide: BorderSide.none),
-        focusedBorder: const OutlineInputBorder(borderSide: BorderSide.none),
-      ),
-    ),
-  );
 }

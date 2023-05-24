@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'screens/home.dart';
+import 'screens/screens.dart';
 
 void main() {
   runApp(
@@ -22,9 +22,8 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        useMaterial3: true,
       ),
-      home: const HomePage(),
+      home: const SendMoneyScreen(),
     );
   }
 }
