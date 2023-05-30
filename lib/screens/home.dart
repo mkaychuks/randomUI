@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:learn_riverpod/providers/provider.dart';
 import 'package:learn_riverpod/providers/state_providers.dart';
+import 'package:learn_riverpod/screens/screens.dart';
 import 'package:learn_riverpod/widgets/action_widgets.dart';
 import 'package:learn_riverpod/widgets/header_section.dart';
 import 'package:learn_riverpod/widgets/tab_transactions.dart';
@@ -70,12 +71,26 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
-                  children: const [
+                  children: [
                     ActionWidgets(
-                        text: "Fund Transfer", imageUrl: "images/trans.png"),
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => SendMoneyScreen(),
+                            ),
+                          );
+                        },
+                        imagefit: BoxFit.none,
+                        text: "Fund Transfer",
+                        imageUrl: "images/trans.png"),
                     ActionWidgets(
-                        text: "Add Money", imageUrl: "images/dollar.png"),
-                    ActionWidgets(text: "More", imageUrl: "images/more.png"),
+                        imagefit: BoxFit.none,
+                        text: "Add Money",
+                        imageUrl: "images/dollar.png"),
+                    ActionWidgets(
+                        imagefit: BoxFit.none,
+                        text: "More",
+                        imageUrl: "images/more.png"),
                   ],
                 ),
               ),

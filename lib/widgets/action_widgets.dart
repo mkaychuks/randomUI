@@ -4,12 +4,15 @@ class ActionWidgets extends StatelessWidget {
   final void Function()? onTap;
   final String text;
   final String imageUrl;
+  BoxFit? imagefit = BoxFit.cover;
 
-  const ActionWidgets({
+
+  ActionWidgets({
     Key? key,
     this.onTap,
     required this.text,
     required this.imageUrl,
+    this.imagefit
   }) : super(key: key);
 
   @override
@@ -36,7 +39,7 @@ class ActionWidgets extends StatelessWidget {
                   borderRadius: BorderRadius.circular(24),
                   child: Image.asset(
                     imageUrl,
-                    fit: BoxFit.cover,
+                    fit: imagefit,
                     // color: Colors.white,
                   ),
                 ),

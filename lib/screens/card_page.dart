@@ -61,16 +61,25 @@ class _CardPageState extends ConsumerState<CardPage>
                     physics: const BouncingScrollPhysics(),
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
-                    children: const [
+                    children: [
                       ActionWidgets(
+                        imagefit: BoxFit.cover,
                           text: "Send Money", imageUrl: "images/visa.png"),
                       ActionWidgets(
+                          imagefit: BoxFit.cover,
+
                           text: "Watson", imageUrl: "images/image2.jpeg"),
                       ActionWidgets(
+                          imagefit: BoxFit.cover,
+
                           text: "Sofia", imageUrl: "images/image3.jpeg"),
                       ActionWidgets(
+                          imagefit: BoxFit.cover,
+
                           text: "Toni", imageUrl: "images/image4.jpeg"),
                       ActionWidgets(
+                          imagefit: BoxFit.cover,
+
                           text: "Alina", imageUrl: "images/image5.jpeg"),
                     ],
                   ),

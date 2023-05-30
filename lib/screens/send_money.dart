@@ -16,10 +16,15 @@ class _SendMoneyScreenState extends State<SendMoneyScreen> {
         appBar: AppBar(
           backgroundColor: const Color(0XFF0D0D0C),
           elevation: 0.0,
-          leading: const Icon(
-            Icons.chevron_left,
-            color: Colors.white,
-            size: 30,
+          leading: IconButton(
+            icon: const Icon(
+              Icons.chevron_left,
+              color: Colors.white,
+              size: 30,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
           ),
           centerTitle: true,
           title: const Text(
@@ -58,12 +63,29 @@ class _SendMoneyScreenState extends State<SendMoneyScreen> {
                     fontWeight: FontWeight.w200),
               ),
               const SizedBox(height: 20),
-              const Text(
-                "\$1250",
-                style: TextStyle(
-                    fontSize: 48,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w800),
+
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold),
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(
+                        Icons.currency_pound,
+                        color: Colors.white,
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide:
+                              const BorderSide(color: Color(0xffB6EF11))),
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide:
+                              const BorderSide(color: Color(0xffB6EF11))),
+                    )),
               ),
 
               // the send button
@@ -83,7 +105,6 @@ class _SendMoneyScreenState extends State<SendMoneyScreen> {
               )
 
               // the numeric pads
-
             ],
           ),
         ),
