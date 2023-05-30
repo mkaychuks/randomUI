@@ -67,10 +67,12 @@ class _SendMoneyScreenState extends State<SendMoneyScreen> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
+                    textAlign: TextAlign.center,
                     style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold),
+                      color: Colors.white,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       prefixIcon: const Icon(
