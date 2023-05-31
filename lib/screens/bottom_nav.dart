@@ -37,13 +37,11 @@ class _BottomNavState extends State<BottomNav> {
         currentIndex: currentIndex,
         elevation: 0.0,
         onTap: onTap,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
         selectedItemColor: const Color(0xffB6EF11),
         unselectedItemColor: Colors.white,
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.wallet), label: "Settings"),
+          BottomNavigationBarItem(icon: Icon(Icons.wallet), label: "Transactions"),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "Settings"),
 
         ],
