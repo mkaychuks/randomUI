@@ -13,9 +13,9 @@ class _BottomNavState extends State<BottomNav> {
   int currentIndex = 0;
 
   List<Widget> screens = [
-    HomeScreen(),
-    CardPage(),
-    ProfilePage(),
+    const HomeScreen(),
+    const CardPage(),
+    const ProfilePage(),
   ];
 
   void onTap(index){
@@ -39,7 +39,7 @@ class _BottomNavState extends State<BottomNav> {
         onTap: onTap,
         selectedItemColor: const Color(0xffB6EF11),
         unselectedItemColor: Colors.white,
-        items: [
+        items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(icon: Icon(Icons.wallet), label: "Transactions"),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "Settings"),

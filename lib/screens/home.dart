@@ -76,7 +76,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                         onTap: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => SendMoneyScreen(),
+                              builder: (context) => const SendMoneyScreen(),
                             ),
                           );
                         },
